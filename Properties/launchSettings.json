@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "homarr (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "homarr (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

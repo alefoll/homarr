@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="homarr.Serie.Series"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:homarr.Serie"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid>
+        <TextBlock Text="Series" FontSize="32" Margin="12 12 0 0" FontWeight="Bold"/>
+
+        <ScrollViewer Margin="0 56 0 0">
+            <GridView ItemsSource="{ x:Bind SerieList }"
+				      Padding="5"
+                      IsItemClickEnabled="True"
+                      ItemClick="OnSerieClick">
+                <GridView.ItemTemplate>
+                    <DataTemplate>
+                        <Border PointerEntered="OnBorderPointerEntered"
+                                PointerExited="OnBorderPointerExited"
+                                BorderThickness="1"
+                                CornerRadius="7"
+                                Width="200"
+                                Height="294">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="FocusVisualPrimaryBrush" Value="Transparent" />
+                                    <Setter Property="FocusVisualSecondaryBrush" Value="Transparent" />
+                                </Style>
+                            </Border.Style>
+
+                            <Border CornerRadius="5">
+                                <Image Source="{ Binding ImagePoster }" Width="200" />
+                            </Border>
+                        </Border>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+
+                <GridView.Resources>
+                    <SolidColorBrush x:Key="GridViewItemBackgroundPointerOver" Color="Transparent" />
+
+                    <Style TargetType="GridViewItem">
+                        <Setter Property="Margin" Value="5" />
+                        <Setter Property="Padding" Value="2" />
+                    </Style>
+                </GridView.Resources>
+            </GridView>
+        </ScrollViewer>
+    </Grid>
+</Page>
