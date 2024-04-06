@@ -1,6 +1,8 @@
-using Microsoft.UI.Xaml;
+using Microsoft.UI;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 using System.Collections.ObjectModel;
+using Windows.UI;
 
 namespace homarr.Movie {
     public sealed partial class Movies : Page {
@@ -22,10 +24,24 @@ namespace homarr.Movie {
             }
         }
 
-        private void OnMovieClick(object sender, RoutedEventArgs e) {
-            var movie = (sender as Button).DataContext as Movie;
+        private void OnMovieClick(object sender, ItemClickEventArgs e) {
+            var movie = e.ClickedItem as Movie;
 
             movie.Play();
+        }
+
+        private void OnBorderPointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e) {
+            var element = sender as Border;
+
+            element.BorderBrush = new SolidColorBrush(Color.FromArgb(45, 255, 255, 255));
+            element.Opacity = 0.7;
+        }
+
+        private void OnBorderPointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e) {
+            var element = sender as Border;
+
+            element.BorderBrush = new SolidColorBrush(Colors.Transparent);
+            element.Opacity = 1;
         }
     }
 }
