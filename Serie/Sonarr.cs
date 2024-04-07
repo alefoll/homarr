@@ -10,6 +10,7 @@ namespace homarr.Serie {
         int id = 0,
         string title = null,
         List<SerieAPIImage> images = null,
+        string path = null,
         string imdbId = null,
         SerieAPIStatistics statistics = null
     );
@@ -64,6 +65,7 @@ namespace homarr.Serie {
                         Title = serie.title,
                         ImagePoster = this.Url + serie.images.Where(image => image.coverType.Equals("poster")).FirstOrDefault().url,
                         ImageFanart = this.Url + serie.images.Where(image => image.coverType.Equals("fanart")).FirstOrDefault().url,
+                        Path = serie.path,
                         IMdBLink = "https://www.imdb.com/title/" + serie.imdbId + "/",
                         Sonarr = this,
                     };

@@ -46,6 +46,13 @@
                             </Border.Style>
 
                             <Border CornerRadius="5">
+                                <Border.ContextFlyout>
+                                    <MenuFlyout>
+                                        <MenuFlyoutItem Text="Play" Click="OnMenuItemPlay" />
+                                        <MenuFlyoutItem Text="Delete" Click="OnMenuItemDelete" />
+                                    </MenuFlyout>
+                                </Border.ContextFlyout>
+
                                 <Canvas Width="210" Height="309">
                                     <Image Source="{ Binding ImagePoster }" Width="210" Height="309" Stretch="UniformToFill" />
 

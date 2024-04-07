@@ -33,6 +33,10 @@ namespace homarr.Serie {
         private async Task PopulateSeasons() {
             var episodes = await this.SelectedSerie.GetEpisodesOnDisk();
 
+            if (episodes.Count() == 0) {
+                Frame.GoBack();
+            }
+
             var seasons = episodes
                 .GroupBy(episode => episode.SeasonNumber)
                 .Select(episodes => {
@@ -71,6 +75,22 @@ namespace homarr.Serie {
             var episode = (sender as Button).DataContext as Episode;
 
             episode.Play();
+        }
+
+        private void OnMenuItemPlay(object sender, RoutedEventArgs e) {
+            var episode = (sender as MenuFlyoutItem).DataContext as Episode;
+
+            episode.Play();
+        }
+
+        private async void OnMenuItemDelete(object sender, RoutedEventArgs e) {
+            var episode = (sender as MenuFlyoutItem).DataContext as Episode;
+
+            await SelectedSerie.DeleteEpisode(episode);
+
+            this.Seasons.Clear();
+
+            await this.PopulateSeasons();
         }
     }
 }

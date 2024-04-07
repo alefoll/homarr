@@ -60,6 +60,13 @@
                                             <ColumnDefinition Width="auto" />
                                         </Grid.ColumnDefinitions>
 
+                                        <Grid.ContextFlyout>
+                                            <MenuFlyout>
+                                                <MenuFlyoutItem Text="Play" Click="OnMenuItemPlay" />
+                                                <MenuFlyoutItem Text="Delete" Click="OnMenuItemDelete" />
+                                            </MenuFlyout>
+                                        </Grid.ContextFlyout>
+
                                         <TextBlock Text="{ Binding EpisodeNumber }"
                                                     TextWrapping="Wrap"
                                                     Margin="0 0 12 0"

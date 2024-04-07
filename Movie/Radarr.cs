@@ -10,6 +10,7 @@ namespace homarr.Movie {
         int id = 0,
         string title = null,
         List<MovieAPIImage> images = null,
+        string path = null,
         MovieAPIFile movieFile = null,
         MovieAPIRatings ratings = null,
         MovieAPIStatistics statistics = null
@@ -66,7 +67,8 @@ namespace homarr.Movie {
                         Id = movie.id,
                         Title = movie.title,
                         ImagePoster = this.Url + movie.images.Where(image => image.coverType.Equals("poster")).FirstOrDefault().url,
-                        Path = movie.movieFile.path,
+                        Path = movie.path,
+                        FilePath = movie.movieFile.path,
                         Duration = movie.movieFile.mediaInfo.runTime,
                         ImdbRating = movie.ratings.imdb.value,
                         Radarr = this,
