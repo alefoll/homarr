@@ -7,10 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:homarr="using:homarr"
     mc:Ignorable="d">
     <Window.SystemBackdrop>
-        <MicaBackdrop />
+        <MicaBackdrop Kind="BaseAlt" />
     </Window.SystemBackdrop>
 
-    <Grid>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Border x:Name="AppTitleBar" VerticalAlignment="Top" Height="40">
             <StackPanel Margin="8 0 0 0" Orientation="Horizontal">
                 <Image Source="/Assets/Logo.svg" Width="32" />
@@ -65,7 +65,7 @@
                 </NavigationViewItem>
             </NavigationView.FooterMenuItems>
 
-            <Frame x:Name="navigationViewFrame"/>
+            <Frame x:Name="navigationViewFrame" />
         </NavigationView>
     </Grid>
 </Window>

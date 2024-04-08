@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -11,6 +12,10 @@ namespace homarr.Movie {
         public string Path { get; set; }
         public string FilePath { get; set; }
         public string Duration { get; set; }
+        public IEnumerable<string> Genres { get; set; }
+        public string GenresStringify {
+            get { return String.Join(", ", this.Genres); }
+        }
         public double ImdbRating { get; set; }
         public Radarr Radarr { get; set; }
 

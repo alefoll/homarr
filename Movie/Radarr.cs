@@ -9,11 +9,18 @@ namespace homarr.Movie {
     public record class MovieAPI(
         int id = 0,
         string title = null,
-        List<MovieAPIImage> images = null,
+        MovieAPIOriginalLanguage originalLanguage = null,
+        IEnumerable<MovieAPIImage> images = null,
         string path = null,
         MovieAPIFile movieFile = null,
+        IEnumerable<string> genres = null,
         MovieAPIRatings ratings = null,
         MovieAPIStatistics statistics = null
+    );
+
+    public record class MovieAPIOriginalLanguage(
+        int id = 0,
+        string name = null
     );
 
     public record class MovieAPIImage(
@@ -60,7 +67,7 @@ namespace homarr.Movie {
             var response = await this.HttpClient.GetFromJsonAsync<List<MovieAPI>>(requestUri);
 
             return response
-                .Where(movie => movie.statistics.sizeOnDisk > 0)
+                .Where(movie => movie.statistics.sizeOnDisk > 0 && movie.originalLanguage.name != "French")
                 .OrderBy(movie => movie.title)
                 .Select(movie => {
                     return new Movie {
@@ -70,6 +77,7 @@ namespace homarr.Movie {
                         Path = movie.path,
                         FilePath = movie.movieFile.path,
                         Duration = movie.movieFile.mediaInfo.runTime,
+                        Genres = movie.genres,
                         ImdbRating = movie.ratings.imdb.value,
                         Radarr = this,
                     };

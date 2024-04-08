@@ -27,7 +27,7 @@
             </HyperlinkButton>
         </StackPanel>
 
-        <ListView ItemsSource="{ x:Bind Seasons }"
+        <ListView ItemsSource="{ x:Bind SelectedSerie.Seasons }"
                   Grid.Row="2"
                   CornerRadius="5"
                   Margin="0">

@@ -1,20 +1,11 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace homarr.Serie {
     public sealed partial class SerieDetailedInfoPage : Page {
-        public record class Season(
-            int SeasonNumber = 0,
-            List<Episode> Episodes = null
-        );
-
         private Serie SelectedSerie;
-        private ObservableCollection<Season> Seasons = new();
 
         public SerieDetailedInfoPage() {
             this.InitializeComponent();
@@ -25,31 +16,10 @@ namespace homarr.Serie {
 
             var serie = (Serie)e.Parameter;
 
-            SelectedSerie = serie;
+            this.SelectedSerie = serie;
 
-            _ = this.PopulateSeasons();
-        }
-
-        private async Task PopulateSeasons() {
-            var episodes = await this.SelectedSerie.GetEpisodesOnDisk();
-
-            if (episodes.Count() == 0) {
+            if (this.SelectedSerie.Episodes.Count() == 0) {
                 Frame.GoBack();
-            }
-
-            var seasons = episodes
-                .GroupBy(episode => episode.SeasonNumber)
-                .Select(episodes => {
-                    return new Season {
-                        SeasonNumber = episodes.First().SeasonNumber,
-                        Episodes = episodes.ToList<Episode>(),
-                    };
-                });
-
-            this.Seasons.Clear();
-
-            foreach (var season in seasons) {
-                this.Seasons.Add(season);
             }
         }
 
@@ -60,9 +30,11 @@ namespace homarr.Serie {
         private async void OnDeleteFile(object sender, RoutedEventArgs e) {
             var episode = (sender as Button).DataContext as Episode;
 
-            await SelectedSerie.DeleteEpisode(episode);
+            await this.SelectedSerie.DeleteEpisode(episode);
 
-            await this.PopulateSeasons();
+            if (this.SelectedSerie.Episodes.Count() == 0) {
+                Frame.GoBack();
+            }
         }
 
         private void OnListClick(object sender, ItemClickEventArgs e) {
@@ -88,7 +60,9 @@ namespace homarr.Serie {
 
             await SelectedSerie.DeleteEpisode(episode);
 
-            await this.PopulateSeasons();
+            if (this.SelectedSerie.Episodes.Count() == 0) {
+                Frame.GoBack();
+            }
         }
     }
 }

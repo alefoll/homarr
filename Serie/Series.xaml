@@ -25,7 +25,7 @@
                             grid width = ???
 
                         formula:
-                            nth element = 8
+                            nth element = 6
                             margin right = 12
                             border width = Math.floor((grid width - (nth element * margin right)) / nth element)
                             border heigth = Math.round(border width * 1.47)
@@ -35,8 +35,8 @@
                             BorderThickness="1"
                             CornerRadius="7"
                             Margin="0 0 12 12"
-                            Width="210"
-                            Height="309">
+                            Width="285"
+                            Height="419">
                         <Border.Style>
                             <Style TargetType="Border">
                                 <Setter Property="FocusVisualPrimaryBrush" Value="Transparent" />
@@ -45,7 +45,17 @@
                         </Border.Style>
 
                         <Border CornerRadius="5">
-                            <Image Source="{ Binding ImagePoster }" Width="210" />
+                            <Canvas Width="285" Height="419">
+                                <Image Source="{ Binding ImagePoster }" Width="285" Height="419" Stretch="UniformToFill" />
+
+                                <Grid Canvas.Top="394" Width="285" Padding="8 4">
+                                    <Grid.Background>
+                                        <SolidColorBrush Color="Black" Opacity="0.7" />
+                                    </Grid.Background>
+
+                                    <TextBlock Text="{ Binding EpisodesCount }" TextAlignment="Center" FontFamily="Roboto" FontWeight="Bold" />
+                                </Grid>
+                            </Canvas>
                         </Border>
                     </Border>
                 </DataTemplate>

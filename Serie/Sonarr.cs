@@ -9,7 +9,7 @@ namespace homarr.Serie {
     public record class SerieAPI(
         int id = 0,
         string title = null,
-        List<SerieAPIImage> images = null,
+        IEnumerable<SerieAPIImage> images = null,
         string path = null,
         string imdbId = null,
         SerieAPIStatistics statistics = null
@@ -56,20 +56,25 @@ namespace homarr.Serie {
 
             var response = await this.HttpClient.GetFromJsonAsync<List<SerieAPI>>(requestUri);
 
-            return response
-                .Where(serie => serie.statistics.sizeOnDisk > 0)
-                .OrderBy(serie => serie.title)
-                .Select(serie => {
-                    return new Serie {
-                        Id = serie.id,
-                        Title = serie.title,
-                        ImagePoster = this.Url + serie.images.Where(image => image.coverType.Equals("poster")).FirstOrDefault().url,
-                        ImageFanart = this.Url + serie.images.Where(image => image.coverType.Equals("fanart")).FirstOrDefault().url,
-                        Path = serie.path,
-                        IMdBLink = $"https://www.imdb.com/title/{serie.imdbId}/",
-                        Sonarr = this,
-                    };
-                });
+            return await Task.WhenAll(
+                response
+                    .Where(serie => serie.statistics.sizeOnDisk > 0)
+                    .OrderBy(serie => serie.title)
+                    .Select(async serie => {
+                        var episodes = await this.GetEpisodes(serie.id);
+
+                        return new Serie {
+                            Id = serie.id,
+                            Title = serie.title,
+                            ImagePoster = this.Url + serie.images.Where(image => image.coverType.Equals("poster")).FirstOrDefault().url,
+                            ImageFanart = this.Url + serie.images.Where(image => image.coverType.Equals("fanart")).FirstOrDefault().url,
+                            Path = serie.path,
+                            IMdBLink = $"https://www.imdb.com/title/{serie.imdbId}/",
+                            Episodes = episodes,
+                            Sonarr = this,
+                        };
+                    })
+                );
         }
 
         public async Task<IEnumerable<Episode>> GetEpisodes(int serieId) {

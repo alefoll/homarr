@@ -13,21 +13,41 @@ namespace homarr.Serie {
         public string Path { get; set; }
         public string IMdBLink { get; set; }
         public Sonarr Sonarr { get; set; }
+        public IEnumerable<Episode> Episodes { get; set; }
+        public string EpisodesCount {
+            get {
+                var s = this.Episodes.Count() > 1 ? "s" : "";
 
-        public async Task<IEnumerable<Episode>> GetEpisodesOnDisk() {
-            return await this.Sonarr.GetEpisodes(this.Id);
+                return $"{this.Episodes.Count()} episode{s}";
+            }
+        }
+        public IEnumerable<Season> Seasons {
+            get {
+                return this.Episodes
+                    .GroupBy(episode => episode.SeasonNumber)
+                    .Select(episodes => {
+                        return new Season {
+                            SeasonNumber = episodes.First().SeasonNumber,
+                            Episodes = episodes.ToList<Episode>(),
+                        };
+                    });
+            }
         }
 
-        public async Task<bool> DeleteEpisode(Episode episode) {
-            var episodes = await this.GetEpisodesOnDisk();
+        public async Task RefreshEpisodes() {
+            this.Episodes = await this.Sonarr.GetEpisodes(Id);
+        }
 
+        public async Task DeleteEpisode(Episode episode) {
             await episode.Delete();
 
-            if (episodes.Count() <= 1) {
+            if (this.Episodes.Count() <= 1) {
                 await this.DeleteSerieFolder();
             }
 
-            return await this.Sonarr.DeleteEpisode(episode.Id);
+            await this.Sonarr.DeleteEpisode(episode.Id);
+
+            await this.RefreshEpisodes();
         }
 
         private async Task DeleteSerieFolder() {
