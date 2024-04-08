@@ -11,59 +11,57 @@
     <Grid>
         <TextBlock Text="Series" FontSize="32" Margin="24 12 0 0" FontWeight="Bold"/>
 
-        <ScrollViewer Margin="0 56 0 0">
-            <GridView ItemsSource="{ x:Bind SerieList }"
-				      Margin="24 12 12 0"
-                      IsItemClickEnabled="True"
-                      ItemClick="OnSerieClick">
-                <GridView.ItemTemplate>
-                    <DataTemplate>
-                        <!--
-                            1080p:
-                              grid width = 1783
+        <GridView ItemsSource="{ x:Bind SerieList }"
+				  Margin="24 68 12 0"
+                  IsItemClickEnabled="True"
+                  ItemClick="OnSerieClick">
+            <GridView.ItemTemplate>
+                <DataTemplate>
+                    <!--
+                        1080p:
+                            grid width = 1783
 
-                            2160p:
-                              grid width = ???
+                        2160p:
+                            grid width = ???
 
-                            formula:
-                              nth element = 8
-                              margin right = 12
-                              border width = Math.floor((grid width - (nth element * margin right)) / nth element)
-                              border heigth = Math.round(border width * 1.47)
-                        -->
-                        <Border PointerEntered="OnBorderPointerEntered"
-                                PointerExited="OnBorderPointerExited"
-                                BorderThickness="1"
-                                CornerRadius="7"
-                                Margin="0 0 12 12"
-                                Width="210"
-                                Height="309">
-                            <Border.Style>
-                                <Style TargetType="Border">
-                                    <Setter Property="FocusVisualPrimaryBrush" Value="Transparent" />
-                                    <Setter Property="FocusVisualSecondaryBrush" Value="Transparent" />
-                                </Style>
-                            </Border.Style>
+                        formula:
+                            nth element = 8
+                            margin right = 12
+                            border width = Math.floor((grid width - (nth element * margin right)) / nth element)
+                            border heigth = Math.round(border width * 1.47)
+                    -->
+                    <Border PointerEntered="OnBorderPointerEntered"
+                            PointerExited="OnBorderPointerExited"
+                            BorderThickness="1"
+                            CornerRadius="7"
+                            Margin="0 0 12 12"
+                            Width="210"
+                            Height="309">
+                        <Border.Style>
+                            <Style TargetType="Border">
+                                <Setter Property="FocusVisualPrimaryBrush" Value="Transparent" />
+                                <Setter Property="FocusVisualSecondaryBrush" Value="Transparent" />
+                            </Style>
+                        </Border.Style>
 
-                            <Border CornerRadius="5">
-                                <Image Source="{ Binding ImagePoster }" Width="210" />
-                            </Border>
+                        <Border CornerRadius="5">
+                            <Image Source="{ Binding ImagePoster }" Width="210" />
                         </Border>
-                    </DataTemplate>
-                </GridView.ItemTemplate>
+                    </Border>
+                </DataTemplate>
+            </GridView.ItemTemplate>
 
-                <GridView.Resources>
-                    <SolidColorBrush x:Key="GridViewItemBackgroundPointerOver" Color="Transparent" />
-                    <SolidColorBrush x:Key="GridViewItemBackgroundPressed" Color="Transparent" />
-                    <SolidColorBrush x:Key="GridViewItemBackgroundSelected" Color="Transparent" />
-                    <SolidColorBrush x:Key="GridViewItemBackgroundSelectedPressed" Color="Transparent" />
+            <GridView.Resources>
+                <SolidColorBrush x:Key="GridViewItemBackgroundPointerOver" Color="Transparent" />
+                <SolidColorBrush x:Key="GridViewItemBackgroundPressed" Color="Transparent" />
+                <SolidColorBrush x:Key="GridViewItemBackgroundSelected" Color="Transparent" />
+                <SolidColorBrush x:Key="GridViewItemBackgroundSelectedPressed" Color="Transparent" />
 
-                    <Style TargetType="GridViewItem">
-                        <Setter Property="Margin" Value="0" />
-                        <Setter Property="Padding" Value="0" />
-                    </Style>
-                </GridView.Resources>
-            </GridView>
-        </ScrollViewer>
+                <Style TargetType="GridViewItem">
+                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="Padding" Value="0" />
+                </Style>
+            </GridView.Resources>
+        </GridView>
     </Grid>
 </Page>

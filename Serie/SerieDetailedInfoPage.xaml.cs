@@ -46,6 +46,8 @@ namespace homarr.Serie {
                     };
                 });
 
+            this.Seasons.Clear();
+
             foreach (var season in seasons) {
                 this.Seasons.Add(season);
             }
@@ -59,8 +61,6 @@ namespace homarr.Serie {
             var episode = (sender as Button).DataContext as Episode;
 
             await SelectedSerie.DeleteEpisode(episode);
-
-            this.Seasons.Clear();
 
             await this.PopulateSeasons();
         }
@@ -87,8 +87,6 @@ namespace homarr.Serie {
             var episode = (sender as MenuFlyoutItem).DataContext as Episode;
 
             await SelectedSerie.DeleteEpisode(episode);
-
-            this.Seasons.Clear();
 
             await this.PopulateSeasons();
         }

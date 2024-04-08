@@ -27,120 +27,119 @@
             </HyperlinkButton>
         </StackPanel>
 
-        <ScrollView Grid.Row="2">
-            <ListView ItemsSource="{ x:Bind Seasons }"
-                        CornerRadius="5"
-                        Margin="0">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ListView ItemsSource="{ Binding Episodes }"
-                                    CornerRadius="5"
-                                    IsItemClickEnabled="True"
-                                    ItemClick="OnListClick"
-                                    Margin="0"
-                                    Padding="12"
-                                    Background="{ ThemeResource ApplicationPageBackgroundThemeBrush }">
-                            <ListView.Header>
-                                <Border BorderBrush="{ ThemeResource SystemFillColorSolidNeutralBackgroundBrush }" BorderThickness="0 0 0 2" Margin="0 0 0 8">
-                                    <TextBlock Margin="14 0 0 8" FontSize="24">
-                                        <Run Text="Season" />
-                                        <Run Text="{ Binding SeasonNumber }" />
-                                    </TextBlock>
-                                </Border>
-                            </ListView.Header>
+        <ListView ItemsSource="{ x:Bind Seasons }"
+                  Grid.Row="2"
+                  CornerRadius="5"
+                  Margin="0">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ListView ItemsSource="{ Binding Episodes }"
+                              CornerRadius="5"
+                              IsItemClickEnabled="True"
+                              ItemClick="OnListClick"
+                              Margin="0"
+                              Padding="12"
+                              Background="{ ThemeResource ApplicationPageBackgroundThemeBrush }">
+                        <ListView.Header>
+                            <Border BorderBrush="{ ThemeResource SystemFillColorSolidNeutralBackgroundBrush }" BorderThickness="0 0 0 2" Margin="0 0 0 8">
+                                <TextBlock Margin="14 0 0 8" FontSize="24">
+                                    <Run Text="Season" />
+                                    <Run Text="{ Binding SeasonNumber }" />
+                                </TextBlock>
+                            </Border>
+                        </ListView.Header>
 
-                            <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="local:Episode">
-                                    <Grid HorizontalAlignment="Stretch">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="auto" />
-                                            <ColumnDefinition Width="100" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="auto" />
-                                            <ColumnDefinition Width="auto" />
-                                        </Grid.ColumnDefinitions>
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="local:Episode">
+                                <Grid HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="100" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="auto" />
+                                    </Grid.ColumnDefinitions>
 
-                                        <Grid.ContextFlyout>
-                                            <MenuFlyout>
-                                                <MenuFlyoutItem Text="Play" Click="OnMenuItemPlay" />
-                                                <MenuFlyoutItem Text="Delete" Click="OnMenuItemDelete" />
-                                            </MenuFlyout>
-                                        </Grid.ContextFlyout>
+                                    <Grid.ContextFlyout>
+                                        <MenuFlyout>
+                                            <MenuFlyoutItem Text="Play" Click="OnMenuItemPlay" />
+                                            <MenuFlyoutItem Text="Delete" Click="OnMenuItemDelete" />
+                                        </MenuFlyout>
+                                    </Grid.ContextFlyout>
 
-                                        <TextBlock Text="{ Binding EpisodeNumber }"
-                                                    TextWrapping="Wrap"
-                                                    Margin="0 0 12 0"
-                                                    VerticalAlignment="Center"
-                                                    Width="26"
-                                                    TextAlignment="Right"
-                                                    FontSize="22"
-                                                    FontWeight="Bold"
-                                                    Grid.Column="0" />
+                                    <TextBlock Text="{ Binding EpisodeNumber }"
+                                               TextWrapping="Wrap"
+                                               Margin="0 0 12 0"
+                                               VerticalAlignment="Center"
+                                               Width="26"
+                                               TextAlignment="Right"
+                                               FontSize="22"
+                                               FontWeight="Bold"
+                                               Grid.Column="0" />
 
-                                        <Border Grid.Column="1" Margin="0 8" CornerRadius="8">
-                                            <Image Source="{ Binding Thumbnail, UpdateSourceTrigger=PropertyChanged }"  />
-                                        </Border>
+                                    <Border Grid.Column="1" Margin="0 8" CornerRadius="8">
+                                        <Image Source="{ Binding Thumbnail, UpdateSourceTrigger=PropertyChanged }" />
+                                    </Border>
 
-                                        <TextBlock Text="{ Binding Title }"
-                                                    TextWrapping="Wrap"
-                                                    Margin="12 0 0 0"
-                                                    VerticalAlignment="Center"
-                                                    Grid.Column="2" />
+                                    <TextBlock Text="{ Binding Title }"
+                                               TextWrapping="Wrap"
+                                               Margin="12 0 0 0"
+                                               VerticalAlignment="Center"
+                                               Grid.Column="2" />
 
-                                        <Button Grid.Column="3"
-                                                Height="48"
-                                                Width="48"
-                                                HorizontalAlignment="Right"
-                                                Padding="0"
-                                                Margin="0 0 12 0">
-                                            <Button.Flyout>
-                                                <Flyout>
-                                                    <StackPanel>
-                                                        <TextBlock Text="Delete episode?" Margin="0,0,0,12" />
+                                    <Button Grid.Column="3"
+                                            Height="48"
+                                            Width="48"
+                                            HorizontalAlignment="Right"
+                                            Padding="0"
+                                            Margin="0 0 12 0">
+                                        <Button.Flyout>
+                                            <Flyout>
+                                                <StackPanel>
+                                                    <TextBlock Text="Delete episode?" Margin="0,0,0,12" />
 
-                                                        <Button Click="OnDeleteFile" Content="Yes" HorizontalAlignment="Right" />
-                                                    </StackPanel>
-                                                </Flyout>
-                                            </Button.Flyout>
+                                                    <Button Click="OnDeleteFile" Content="Yes" HorizontalAlignment="Right" />
+                                                </StackPanel>
+                                            </Flyout>
+                                        </Button.Flyout>
 
-                                            <Image Source="/Assets/recycle_bin.png" Width="34" Stretch="Uniform" />
-                                        </Button>
+                                        <Image Source="/Assets/recycle_bin.png" Width="34" Stretch="Uniform" />
+                                    </Button>
 
-                                        <Button Grid.Column="4" Click="OnListClick" Height="48" Width="48" HorizontalAlignment="Right" Padding="0">
-                                            <FontIcon Glyph="&#xE768;" FontSize="24" Foreground="Green" />
-                                        </Button>
-                                    </Grid>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
+                                    <Button Grid.Column="4" Click="OnListClick" Height="48" Width="48" HorizontalAlignment="Right" Padding="0">
+                                        <FontIcon Glyph="&#xE768;" FontSize="24" Foreground="Green" />
+                                    </Button>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
 
-                            <ListView.Resources>
-                                <StaticResource x:Key="ListViewItemBackground" ResourceKey="SubtleFillColorTransparentBrush" />
-                                <StaticResource x:Key="ListViewItemBackgroundPointerOver" ResourceKey="SubtleFillColorSecondaryBrush" />
-                                <StaticResource x:Key="ListViewItemBackgroundPressed" ResourceKey="SubtleFillColorTertiaryBrush" />
-                                <StaticResource x:Key="ListViewItemBackgroundSelected" ResourceKey="SubtleFillColorSecondaryBrush" />
-                                <StaticResource x:Key="ListViewItemBackgroundSelectedPointerOver" ResourceKey="SubtleFillColorTertiaryBrush" />
-                                <StaticResource x:Key="ListViewItemBackgroundSelectedPressed" ResourceKey="SubtleFillColorSecondaryBrush" />
-                            </ListView.Resources>
-                        </ListView>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
+                        <ListView.Resources>
+                            <StaticResource x:Key="ListViewItemBackground" ResourceKey="SubtleFillColorTransparentBrush" />
+                            <StaticResource x:Key="ListViewItemBackgroundPointerOver" ResourceKey="SubtleFillColorSecondaryBrush" />
+                            <StaticResource x:Key="ListViewItemBackgroundPressed" ResourceKey="SubtleFillColorTertiaryBrush" />
+                            <StaticResource x:Key="ListViewItemBackgroundSelected" ResourceKey="SubtleFillColorSecondaryBrush" />
+                            <StaticResource x:Key="ListViewItemBackgroundSelectedPointerOver" ResourceKey="SubtleFillColorTertiaryBrush" />
+                            <StaticResource x:Key="ListViewItemBackgroundSelectedPressed" ResourceKey="SubtleFillColorSecondaryBrush" />
+                        </ListView.Resources>
+                    </ListView>
+                </DataTemplate>
+            </ListView.ItemTemplate>
 
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="Margin" Value="10" />
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    </Style>
-                </ListView.ItemContainerStyle>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Margin" Value="10" />
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
 
-                <ListView.Resources>
-                    <SolidColorBrush x:Key="ListViewItemBackground" Color="Transparent" />
-                    <SolidColorBrush x:Key="ListViewItemBackgroundPointerOver" Color="Transparent" />
-                    <SolidColorBrush x:Key="ListViewItemBackgroundPressed" Color="Transparent" />
-                    <SolidColorBrush x:Key="ListViewItemBackgroundSelected" Color="Transparent" />
-                    <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPointerOver" Color="Transparent" />
-                    <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPressed" Color="Transparent" />
-                </ListView.Resources>
-            </ListView>
-        </ScrollView>
+            <ListView.Resources>
+                <SolidColorBrush x:Key="ListViewItemBackground" Color="Transparent" />
+                <SolidColorBrush x:Key="ListViewItemBackgroundPointerOver" Color="Transparent" />
+                <SolidColorBrush x:Key="ListViewItemBackgroundPressed" Color="Transparent" />
+                <SolidColorBrush x:Key="ListViewItemBackgroundSelected" Color="Transparent" />
+                <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPointerOver" Color="Transparent" />
+                <SolidColorBrush x:Key="ListViewItemBackgroundSelectedPressed" Color="Transparent" />
+            </ListView.Resources>
+        </ListView>
     </Grid>
 </Page>

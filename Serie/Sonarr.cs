@@ -66,7 +66,7 @@ namespace homarr.Serie {
                         ImagePoster = this.Url + serie.images.Where(image => image.coverType.Equals("poster")).FirstOrDefault().url,
                         ImageFanart = this.Url + serie.images.Where(image => image.coverType.Equals("fanart")).FirstOrDefault().url,
                         Path = serie.path,
-                        IMdBLink = "https://www.imdb.com/title/" + serie.imdbId + "/",
+                        IMdBLink = $"https://www.imdb.com/title/{serie.imdbId}/",
                         Sonarr = this,
                     };
                 });
@@ -77,23 +77,23 @@ namespace homarr.Serie {
 
             var responseEpisodes = await this.HttpClient.GetFromJsonAsync<List<EpisodeAPI>>(requestEpisodesUri);
 
-            return await Task.WhenAll(
-                responseEpisodes
-                    .Where(episode => episode.hasFile)
-                    .Select(async episode => {
-                        var requestEpisodeFileIdUri = new Uri(this.Url + "/api/v3/episodefile/" + episode.episodeFileId);
+            var requestEpisodeFilesUri = new Uri(this.Url + "/api/v3/episodefile?seriesId=" + serieId);
 
-                        var responseEpisodeFileId = await this.HttpClient.GetFromJsonAsync<EpisodeFileAPI>(requestEpisodeFileIdUri);
+            var responseEpisodeFiles = await this.HttpClient.GetFromJsonAsync<List<EpisodeFileAPI>>(requestEpisodeFilesUri);
 
-                        return new Episode {
-                            Id = responseEpisodeFileId.id,
-                            Title = episode.title,
-                            SeasonNumber = episode.seasonNumber,
-                            EpisodeNumber = episode.episodeNumber,
-                            Path = responseEpisodeFileId.path,
-                        };
-                    })
-            );
+            return responseEpisodes
+                .Where(episode => episode.hasFile)
+                .Select(episode => {
+                    var episodeFile = responseEpisodeFiles.Find(episodeFile => episodeFile.id == episode.episodeFileId);
+
+                    return new Episode {
+                        Id = episodeFile.id,
+                        Title = episode.title,
+                        SeasonNumber = episode.seasonNumber,
+                        EpisodeNumber = episode.episodeNumber,
+                        Path = episodeFile.path,
+                    };
+                });
         }
 
         public async Task<bool> DeleteEpisode(int episodeId) {

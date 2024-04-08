@@ -1,12 +1,8 @@
-using Microsoft.UI;
-using Microsoft.UI.System;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using Windows.UI;
 
 namespace homarr {
     public sealed partial class Settings : Page {
