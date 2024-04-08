@@ -34,6 +34,8 @@ namespace homarr.Movie {
             var folder = await StorageFolder.GetFolderFromPathAsync(this.Path);
 
             await folder.DeleteAsync(StorageDeleteOption.Default);
+
+            await this.Radarr.DeleteMovie(this.Id);
         }
     }
 }

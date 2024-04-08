@@ -16,10 +16,12 @@ namespace homarr.Movie {
 
             this.Radarr = new Radarr(Settings.GetSetting("RadarrUrl"), Settings.GetSetting("RadarrApiKey"));
 
-            getMovies();
+            this.getMovies();
         }
 
         private async void getMovies() {
+            this.MovieList.Clear();
+
             foreach (var movie in await this.Radarr.GetMovies()) {
                 this.MovieList.Add(movie);
             }
@@ -41,6 +43,8 @@ namespace homarr.Movie {
             var movie = (sender as MenuFlyoutItem).DataContext as Movie;
 
             await movie.Delete();
+
+            this.getMovies();
         }
 
         private void OnBorderPointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e) {
