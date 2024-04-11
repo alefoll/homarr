@@ -13,6 +13,7 @@ namespace homarr.Serie {
         public int SeasonNumber { get; set; }
         public int EpisodeNumber { get; set; }
         public string Path { get; set; }
+        public string Quality { get; set; }
 
         private BitmapImage _thumbnail { get; set; }
         private bool _thumbnailRetreiveCalled { get; set; } = false;

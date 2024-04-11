@@ -63,7 +63,7 @@ namespace homarr {
                 };
 
                 var border = new Border {
-                    Background = (Brush)Application.Current.Resources["ApplicationPageBackgroundThemeBrush"],
+                    Background = (Brush)Application.Current.Resources["CardBackgroundFillColorDefaultBrush"],
                     Padding = new Thickness(10),
                     CornerRadius = new CornerRadius(5),
                 };

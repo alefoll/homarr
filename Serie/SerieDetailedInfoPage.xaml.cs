@@ -43,12 +43,6 @@ namespace homarr.Serie {
             episode.Play();
         }
 
-        private void OnListClick(object sender, RoutedEventArgs e) {
-            var episode = (sender as Button).DataContext as Episode;
-
-            episode.Play();
-        }
-
         private void OnMenuItemPlay(object sender, RoutedEventArgs e) {
             var episode = (sender as MenuFlyoutItem).DataContext as Episode;
 

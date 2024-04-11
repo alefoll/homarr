@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 
 namespace homarr.Serie {
-    public class Serie {
+    public class Serie : INotifyPropertyChanged {
         public int Id { get; set; }
         public string Title { get; set; }
         public string ImagePoster { get; set; }
@@ -32,7 +33,12 @@ namespace homarr.Serie {
                         };
                     });
             }
+            // HACK: use empty set to make the IEnumerable non read-only
+            // to trigger the PropertyChanged in SerieDetailedInfoPage
+            set { }
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public async Task RefreshEpisodes() {
             this.Episodes = await this.Sonarr.GetEpisodes(Id);
@@ -48,6 +54,8 @@ namespace homarr.Serie {
             await this.Sonarr.DeleteEpisode(episode.Id);
 
             await this.RefreshEpisodes();
+
+            this.PropertyChanged?.Invoke(this, new(nameof(Seasons)));
         }
 
         private async Task DeleteSerieFolder() {

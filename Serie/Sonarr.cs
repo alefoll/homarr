@@ -9,10 +9,16 @@ namespace homarr.Serie {
     public record class SerieAPI(
         int id = 0,
         string title = null,
+        SerieAPIOriginalLanguage originalLanguage = null,
         IEnumerable<SerieAPIImage> images = null,
         string path = null,
         string imdbId = null,
         SerieAPIStatistics statistics = null
+    );
+
+    public record class SerieAPIOriginalLanguage(
+        int id = 0,
+        string name = null
     );
 
     public record class SerieAPIImage(
@@ -36,7 +42,14 @@ namespace homarr.Serie {
     public record class EpisodeFileAPI(
         int id = 0,
         string path = null,
-        string relativePath = null
+        string relativePath = null,
+        EpisodeAPIQuality quality = null
+    );
+    public record class EpisodeAPIQuality(
+        EpisodeAPIQualityQuality quality = null
+    );
+    public record class EpisodeAPIQualityQuality(
+        string name = null
     );
 
     public sealed partial class Sonarr {
@@ -58,7 +71,7 @@ namespace homarr.Serie {
 
             return await Task.WhenAll(
                 response
-                    .Where(serie => serie.statistics.sizeOnDisk > 0)
+                    .Where(serie => serie.statistics.sizeOnDisk > 0 && serie.originalLanguage.name != "French")
                     .OrderBy(serie => serie.title)
                     .Select(async serie => {
                         var episodes = await this.GetEpisodes(serie.id);
@@ -97,6 +110,7 @@ namespace homarr.Serie {
                         SeasonNumber = episode.seasonNumber,
                         EpisodeNumber = episode.episodeNumber,
                         Path = episodeFile.path,
+                        Quality = episodeFile.quality.quality.name,
                     };
                 });
         }

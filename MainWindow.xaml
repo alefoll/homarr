@@ -10,7 +10,7 @@
         <MicaBackdrop Kind="BaseAlt" />
     </Window.SystemBackdrop>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid>
         <Border x:Name="AppTitleBar" VerticalAlignment="Top" Height="40">
             <StackPanel Margin="8 0 0 0" Orientation="Horizontal">
                 <Image Source="/Assets/Logo.svg" Width="32" />
@@ -32,6 +32,7 @@
                 <Thickness x:Key="NavigationViewContentGridBorderThickness">1 1 0 0</Thickness>
                 <CornerRadius x:Key="NavigationViewContentGridCornerRadius">8 0 0 0</CornerRadius>
                 <Thickness x:Key="NavigationViewItemMargin">0</Thickness>
+                <SolidColorBrush x:Key="NavigationViewContentBackground" Color="Transparent" />
             </NavigationView.Resources>
 
             <NavigationView.MenuItems>
