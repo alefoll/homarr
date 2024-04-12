@@ -11,22 +11,25 @@
     </Window.SystemBackdrop>
 
     <Grid>
-        <Border x:Name="AppTitleBar" VerticalAlignment="Top" Height="40">
-            <StackPanel Margin="8 0 0 0" Orientation="Horizontal">
+        <Border x:Name="AppTitleBar" Margin="48 0 0 0" VerticalAlignment="Top" Height="40">
+            <StackPanel Orientation="Horizontal">
                 <Image Source="/Assets/Logo.svg" Width="32" />
                 <TextBlock x:Name="AppTitle" Text="Homarr" Margin="12 10 0 0" />
             </StackPanel>
         </Border>
 
-        <NavigationView x:Name="navigationView"
+        <NavigationView x:Name="NavigationView"
                         IsSettingsVisible="False"
                         OpenPaneLength="100"
                         PaneDisplayMode="Left"
                         IsPaneToggleButtonVisible="False"
-                        IsBackButtonVisible="Collapsed"
-                        SelectionChanged="NavigationView_SelectionChanged">
+                        IsBackButtonVisible="Visible"
+                        IsBackEnabled="False"
+                        SelectionChanged="OnNavigationViewSelectionChanged"
+                        BackRequested="OnNavigationViewBackRequested"
+                        ItemInvoked="OnNavigationViewItemInvoked">
             <NavigationView.Resources>
-                <Thickness x:Key="NavigationViewButtonHolderGridMargin">1 40 0 0</Thickness>
+                <Thickness x:Key="NavigationViewButtonHolderGridMargin">0 2 0 0</Thickness>
                 <Thickness x:Key="NavigationViewPaneContentGridMargin">0 44 0 0</Thickness>
                 <Thickness x:Key="NavigationViewContentMargin">0 46 0 0</Thickness>
                 <Thickness x:Key="NavigationViewContentGridBorderThickness">1 1 0 0</Thickness>
@@ -66,7 +69,7 @@
                 </NavigationViewItem>
             </NavigationView.FooterMenuItems>
 
-            <Frame x:Name="navigationViewFrame" />
+            <Frame x:Name="NavigationViewFrame" Navigated="OnNavigationViewFrameNavigated" />
         </NavigationView>
     </Grid>
 </Window>

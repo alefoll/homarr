@@ -16,7 +16,7 @@ namespace homarr {
                 presenter.Maximize();
             }
 
-            var toto = new NavigationViewItem {
+            new NavigationViewItem {
                 Content = new StackPanel {
                     Orientation = Orientation.Vertical,
                     HorizontalAlignment = HorizontalAlignment.Center,
@@ -35,28 +35,80 @@ namespace homarr {
                 },
             };
 
-            navigationView.SelectedItem = navigationView.MenuItems.First();
+            this.NavigationView.SelectedItem = this.NavigationView.MenuItems.First();
+
+            Type pageType = Type.GetType(GetPageName("Series"));
+
+            this.NavigationViewFrame.Navigate(pageType);
         }
 
-        private void NavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args) {
-            var selected = (NavigationViewItem)args.SelectedItem;
+        private void OnNavigationViewSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args) {
+            var selectedItem = (NavigationViewItem)args.SelectedItem;
 
-            if (selected.Tag.ToString() != "Settings" && Settings.IsMissingSettings()) {
-                navigationView.SelectedItem = navigationView.FooterMenuItems.First();
+            if (selectedItem == null) {
                 return;
             }
 
-            Type pageType = Type.GetType(GetPageName(selected.Tag.ToString()));
+            if (selectedItem.Tag.ToString() == "Settings") {
+                return;
+            }
 
-            navigationViewFrame.Navigate(pageType, null, args.RecommendedNavigationTransitionInfo);
+            if (!Settings.IsMissingSettings()) {
+                return;
+            }
+
+            this.NavigationView.SelectedItem = this.GetNavigationViewItem("Settings");
+
+            Type pageType = Type.GetType(GetPageName("Settings"));
+
+            this.NavigationViewFrame.Navigate(pageType, null, args.RecommendedNavigationTransitionInfo);
+        }
+
+        private void OnNavigationViewItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args) {
+            var clickedItem = (NavigationViewItem)args.InvokedItemContainer;
+
+            if (clickedItem == null) {
+                return;
+            }
+
+            if (this.NavigationViewFrame.SourcePageType.Name == clickedItem.Tag.ToString()) {
+                return;
+            }
+
+            Type pageType = Type.GetType(GetPageName(clickedItem.Tag.ToString()));
+
+            this.NavigationViewFrame.Navigate(pageType, null, args.RecommendedNavigationTransitionInfo);
+        }
+
+        private void OnNavigationViewFrameNavigated(object sender, Microsoft.UI.Xaml.Navigation.NavigationEventArgs e) {
+            this.NavigationView.IsBackEnabled = this.NavigationViewFrame.CanGoBack;
+        }
+
+        private void OnNavigationViewBackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args) {
+            this.NavigationViewFrame.GoBack();
+
+            this.NavigationView.SelectedItem = GetNavigationViewItem(this.NavigationViewFrame.SourcePageType.Name);
+
+            this.NavigationView.IsBackEnabled = this.NavigationViewFrame.CanGoBack;
         }
 
         private string GetPageName(string tag) {
             return tag switch {
                 "Series" => "homarr.Serie.Series",
+                "SerieDetailedInfoPage" => "homarr.Serie.SerieDetailedInfoPage",
                 "Movies" => "homarr.Movie.Movies",
                 "Settings" => "homarr.Settings",
                 _ => throw new Exception("Page not found"),
+            };
+        }
+
+        private object GetNavigationViewItem(string tag) {
+            return tag switch {
+                "Series" => this.NavigationView.MenuItems[0],
+                "SerieDetailedInfoPage" => this.NavigationView.MenuItems[0],
+                "Movies" => this.NavigationView.MenuItems[1],
+                "Settings" => this.NavigationView.FooterMenuItems.First(),
+                _ => throw new Exception("Navigation Item not found"),
             };
         }
     }
