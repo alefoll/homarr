@@ -14,14 +14,25 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0" CornerRadius="5 5 0 0" Background="{ ThemeResource LayerFillColorDefaultBrush }" Padding="24 12 24 24">
+        <Grid Grid.Column="0"
+              CornerRadius="15 15 0 0"
+              BorderBrush="{ ThemeResource SystemFillColorNeutralBackgroundBrush }"
+              BorderThickness="1 1 1 0"
+              Background="{ ThemeResource AcrylicBackgroundFillColorBaseBrush }"
+              Padding="24 12 24 24">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Text="{ x:Bind SelectedSerie.Title }" TextAlignment="Center" Margin="0 0 0 24" FontSize="32" FontWeight="Bold"/>
+            <TextBlock Grid.Row="0"
+                       Text="{ x:Bind SelectedSerie.Title }"
+                       TextAlignment="Center"
+                       Margin="0 0 0 24"
+                       FontFamily="/Assets/fonts/cerebrisans-bold.ttf#Cerebri Sans"
+                       FontSize="32"
+                       FontWeight="Bold" />
 
             <Border Grid.Row="1" CornerRadius="7" BorderThickness="0" VerticalAlignment="Center">
                 <Border.Style>
@@ -34,37 +45,30 @@
                 <Image Source="{ x:Bind SelectedSerie.ImagePoster }" Width="285" />
             </Border>
 
-            <Grid Grid.Row="2">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="auto" />
-                </Grid.ColumnDefinitions>
-
-                <Button Grid.Column="0" Content="Back" Click="OnGoBackClick" />
-
-                <HyperlinkButton Grid.Column="1" NavigateUri="{ x:Bind SelectedSerie.IMdBLink }" Padding="4">
-                    <HyperlinkButton.Content>
-                        <Image Source="/Assets/IMDB_Logo_2016.svg" Height="28" />
-                    </HyperlinkButton.Content>
-                </HyperlinkButton>
-            </Grid>
+            <HyperlinkButton Grid.Row="2" NavigateUri="{ x:Bind SelectedSerie.IMdBLink }" Padding="4">
+                <HyperlinkButton.Content>
+                    <Image Source="/Assets/IMDB_Logo_2016.svg" Height="28" />
+                </HyperlinkButton.Content>
+            </HyperlinkButton>
         </Grid>
 
         <ListView ItemsSource="{ x:Bind SelectedSerie.Seasons, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged }"
                   Grid.Column="1"
-                  CornerRadius="5"
-                  Padding="0 0 24 0">
+                  CornerRadius="15 0 0 0"
+                  BorderBrush="{ ThemeResource SystemFillColorNeutralBackgroundBrush }"
+                  BorderThickness="1 1 0 0"
+                  Padding="0 0 8 0"
+                  Background="{ ThemeResource AcrylicBackgroundFillColorBaseBrush }">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ListView ItemsSource="{ Binding Episodes }"
                               CornerRadius="5"
                               IsItemClickEnabled="True"
                               ItemClick="OnListClick"
-                              Background="{ ThemeResource LayerFillColorDefaultBrush }"
                               Padding="0 0 0 2">
                         <ListView.Header>
                             <Border BorderBrush="{ ThemeResource SystemFillColorSolidNeutralBackgroundBrush }" BorderThickness="0 0 0 2" Margin="0 0 0 8">
-                                <TextBlock Padding="24 16" FontSize="22" FontWeight="Bold">
+                                <TextBlock Padding="24 16" FontSize="28" FontWeight="Bold" FontFamily="/Assets/fonts/cerebrisans-bold.ttf#Cerebri Sans">
                                     <Run Text="Season" />
                                     <Run Text="{ Binding SeasonNumber }" />
                                 </TextBlock>
@@ -80,6 +84,7 @@
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="auto" />
                                         <ColumnDefinition Width="auto" />
+                                        <ColumnDefinition Width="auto" />
                                     </Grid.ColumnDefinitions>
 
                                     <Grid.ContextFlyout>
@@ -91,10 +96,11 @@
 
                                     <TextBlock Grid.Column="0"
                                                Text="{ Binding EpisodeNumber }"
+                                               FontFamily="/Assets/fonts/azeretmono-variablefont_wght.ttf#Azeret Mono"
                                                TextWrapping="Wrap"
                                                Margin="0 0 12 0"
                                                VerticalAlignment="Center"
-                                               Width="32"
+                                               Width="34"
                                                TextAlignment="Right"
                                                FontSize="26"
                                                FontWeight="Bold" />
@@ -105,21 +111,32 @@
 
                                     <TextBlock Grid.Column="2"
                                                Text="{ Binding Title }"
+                                               FontFamily="/Assets/fonts/cerebrisans-regular.ttf#Cerebri Sans"
                                                TextWrapping="Wrap"
                                                FontSize="16"
                                                Margin="12 0 0 0"
                                                VerticalAlignment="Center" />
 
-                                    <Border Grid.Column="3"
+                                    <TextBlock Grid.Column="3"
+                                               Text="{ Binding Duration }"
+                                               FontFamily="/Assets/fonts/azeretmono-variablefont_wght.ttf#Azeret Mono"
+                                               FontWeight="Bold"
+                                               VerticalAlignment="Center"
+                                               FontSize="16" />
+
+                                    <Border Grid.Column="4"
                                             Margin="12 0"
                                             Background="{ ThemeResource SystemFillColorAttentionBrush }"
                                             Height="19"
                                             Padding="4 0"
                                             CornerRadius="2">
-                                        <TextBlock Text="{ Binding Quality }" VerticalAlignment="Center" FontSize="11" />
+                                        <TextBlock Text="{ Binding Quality }"
+                                                   VerticalAlignment="Center"
+                                                   FontSize="11"
+                                                   FontFamily="/Assets/fonts/cerebrisans-regular.ttf#Cerebri Sans" />
                                     </Border>
 
-                                    <Button Grid.Column="4"
+                                    <Button Grid.Column="5"
                                             Height="48"
                                             Width="48"
                                             HorizontalAlignment="Right"
@@ -130,9 +147,12 @@
                                         <Button.Flyout>
                                             <Flyout>
                                                 <StackPanel>
-                                                    <TextBlock Text="Delete episode?" Margin="0,0,0,12" />
+                                                    <TextBlock Text="Delete episode?" FontFamily="/Assets/fonts/cerebrisans-regular.ttf#Cerebri Sans" Margin="0 0 0 12" />
 
-                                                    <Button Click="OnDeleteFile" Content="Yes" HorizontalAlignment="Right" />
+                                                    <Button Click="OnDeleteFile"
+                                                            Content="Yes"
+                                                            HorizontalAlignment="Right"
+                                                            FontFamily="/Assets/fonts/cerebrisans-regular.ttf#Cerebri Sans" />
                                                 </StackPanel>
                                             </Flyout>
                                         </Button.Flyout>

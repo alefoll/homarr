@@ -1,8 +1,11 @@
+using Microsoft.UI.Composition;
+using Microsoft.UI.Composition.SystemBackdrops;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Linq;
+using WinRT;
 
 namespace homarr {
     public sealed partial class MainWindow : Window {
@@ -11,6 +14,8 @@ namespace homarr {
 
             ExtendsContentIntoTitleBar = true;
             SetTitleBar(AppTitleBar);
+
+            this.SetAcrylicBackdrop();
 
             if (this.AppWindow.Presenter is OverlappedPresenter presenter) {
                 presenter.Maximize();
@@ -40,6 +45,39 @@ namespace homarr {
             Type pageType = Type.GetType(GetPageName("Series"));
 
             this.NavigationViewFrame.Navigate(pageType);
+        }
+
+        private void SetAcrylicBackdrop() {
+            if (!DesktopAcrylicController.IsSupported()) {
+                return;
+            }
+
+            var dispatcherQueueHelper = new WindowsSystemDispatcherQueueHelper();
+            dispatcherQueueHelper.EnsureWindowsSystemDispatcherQueueController();
+
+            var backdropConfiguration = new SystemBackdropConfiguration {
+                IsInputActive = true,
+            };
+
+            backdropConfiguration.Theme = ((FrameworkElement)this.Content).ActualTheme switch {
+                ElementTheme.Dark => SystemBackdropTheme.Dark,
+                ElementTheme.Light => SystemBackdropTheme.Light,
+                ElementTheme.Default => SystemBackdropTheme.Default,
+                _ => backdropConfiguration.Theme
+            };
+
+            this.Activated += (sender, args) => {
+                backdropConfiguration.IsInputActive = args.WindowActivationState != WindowActivationState.Deactivated;
+            };
+
+            var backdropController = new DesktopAcrylicController();
+
+            this.Closed += (sender, args) => {
+                backdropController.Dispose();
+            };
+
+            backdropController.AddSystemBackdropTarget(this.As<ICompositionSupportsSystemBackdrop>());
+            backdropController.SetSystemBackdropConfiguration(backdropConfiguration);
         }
 
         private void OnNavigationViewSelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args) {

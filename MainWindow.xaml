@@ -6,15 +6,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:homarr="using:homarr"
     mc:Ignorable="d">
-    <Window.SystemBackdrop>
-        <MicaBackdrop Kind="BaseAlt" />
-    </Window.SystemBackdrop>
-
     <Grid>
         <Border x:Name="AppTitleBar" Margin="48 0 0 0" VerticalAlignment="Top" Height="40">
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                 <Image Source="/Assets/Logo.svg" Width="32" />
-                <TextBlock x:Name="AppTitle" Text="Homarr" Margin="12 10 0 0" />
+                <TextBlock x:Name="AppTitle" Text="Homarr" Margin="12 10 0 0" FontFamily="/Assets/fonts/cerebrisans-regular.ttf#Cerebri Sans" />
             </StackPanel>
         </Border>
 
@@ -30,9 +26,9 @@
                         ItemInvoked="OnNavigationViewItemInvoked">
             <NavigationView.Resources>
                 <Thickness x:Key="NavigationViewButtonHolderGridMargin">0 2 0 0</Thickness>
-                <Thickness x:Key="NavigationViewPaneContentGridMargin">0 44 0 0</Thickness>
+                <Thickness x:Key="NavigationViewPaneContentGridMargin">0 4 0 0</Thickness>
                 <Thickness x:Key="NavigationViewContentMargin">0 46 0 0</Thickness>
-                <Thickness x:Key="NavigationViewContentGridBorderThickness">1 1 0 0</Thickness>
+                <Thickness x:Key="NavigationViewContentGridBorderThickness">0</Thickness>
                 <CornerRadius x:Key="NavigationViewContentGridCornerRadius">8 0 0 0</CornerRadius>
                 <Thickness x:Key="NavigationViewItemMargin">0</Thickness>
                 <SolidColorBrush x:Key="NavigationViewContentBackground" Color="Transparent" />
@@ -43,7 +39,7 @@
                     <NavigationViewItem.Content>
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="-12 0 -21 0">
                             <FontIcon FontFamily="Segoe UI Emoji" Glyph="&#x1F4FA;" FontSize="32" />
-                            <TextBlock Text="Series" TextAlignment="Center" />
+                            <TextBlock Text="Series" TextAlignment="Center" FontFamily="/Assets/fonts/cerebrisans-regular.ttf#Cerebri Sans" />
                         </StackPanel>
                     </NavigationViewItem.Content>
                 </NavigationViewItem>
@@ -52,7 +48,7 @@
                     <NavigationViewItem.Content>
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="-12 0 -21 0">
                             <FontIcon FontFamily="Segoe UI Emoji" Glyph="&#x1F3AC;" FontSize="32" />
-                            <TextBlock Text="Movies" TextAlignment="Center" />
+                            <TextBlock Text="Movies" TextAlignment="Center" FontFamily="/Assets/fonts/cerebrisans-regular.ttf#Cerebri Sans" />
                         </StackPanel>
                     </NavigationViewItem.Content>
                 </NavigationViewItem>
@@ -63,7 +59,7 @@
                     <NavigationViewItem.Content>
                         <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="-12 8 -21 0">
                             <Image Source="/Assets/settings.png" Height="32" />
-                            <TextBlock Text="Settings" TextAlignment="Center" />
+                            <TextBlock Text="Settings" TextAlignment="Center" FontFamily="/Assets/fonts/cerebrisans-regular.ttf#Cerebri Sans" />
                         </StackPanel>
                     </NavigationViewItem.Content>
                 </NavigationViewItem>

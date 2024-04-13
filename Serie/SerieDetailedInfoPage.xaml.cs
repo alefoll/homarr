@@ -23,10 +23,6 @@ namespace homarr.Serie {
             }
         }
 
-        private void OnGoBackClick(object sender, RoutedEventArgs e) {
-            Frame.GoBack();
-        }
-
         private async void OnDeleteFile(object sender, RoutedEventArgs e) {
             var episode = (sender as Button).DataContext as Episode;
 

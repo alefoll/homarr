@@ -6,11 +6,13 @@
     xmlns:local="using:homarr"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ ThemeResource LayerFillColorDefaultBrush }">
+    mc:Ignorable="d">
 
-    <Grid>
-        <TextBlock Text="Settings" FontSize="32" Margin="24 12 0 0" FontWeight="Bold"/>
+    <Grid Background="{ ThemeResource AcrylicBackgroundFillColorBaseBrush }"
+          BorderBrush="{ ThemeResource SystemFillColorNeutralBackgroundBrush }"
+          BorderThickness="1 1 0 0"
+          CornerRadius="15 0 0 0">
+        <TextBlock Text="Settings" FontSize="32" Margin="24 12 0 0" FontWeight="Bold" FontFamily="/Assets/fonts/cerebrisans-bold.ttf#Cerebri Sans" />
 
         <ScrollView Margin="0 56 0 0">
             <Grid x:Name="SettingsGrid" RowSpacing="12" Padding="24 16">

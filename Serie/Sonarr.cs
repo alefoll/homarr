@@ -43,13 +43,20 @@ namespace homarr.Serie {
         int id = 0,
         string path = null,
         string relativePath = null,
-        EpisodeAPIQuality quality = null
+        EpisodeFileAPIQuality quality = null,
+        EpisodeFileAPIMediaInfo mediaInfo = null
     );
-    public record class EpisodeAPIQuality(
-        EpisodeAPIQualityQuality quality = null
+
+    public record class EpisodeFileAPIQuality(
+        EpisodeFileAPIQualityQuality quality = null
     );
-    public record class EpisodeAPIQualityQuality(
+
+    public record class EpisodeFileAPIQualityQuality(
         string name = null
+    );
+
+    public record class EpisodeFileAPIMediaInfo(
+        string runTime = null
     );
 
     public sealed partial class Sonarr {
@@ -111,6 +118,7 @@ namespace homarr.Serie {
                         EpisodeNumber = episode.episodeNumber,
                         Path = episodeFile.path,
                         Quality = episodeFile.quality.quality.name,
+                        Duration = episodeFile.mediaInfo.runTime,
                     };
                 });
         }

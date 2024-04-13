@@ -6,11 +6,13 @@
     xmlns:local="using:homarr.Movie"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ ThemeResource LayerFillColorDefaultBrush }">
+    mc:Ignorable="d">
 
-    <Grid>
-        <TextBlock Text="Movies" FontSize="32" Margin="24 12 0 0" FontWeight="Bold"/>
+    <Grid Background="{ ThemeResource AcrylicBackgroundFillColorBaseBrush }"
+          BorderBrush="{ ThemeResource SystemFillColorNeutralBackgroundBrush }"
+          BorderThickness="1 1 0 0"
+          CornerRadius="15 0 0 0">
+        <TextBlock Text="Movies" FontSize="32" Margin="24 12 0 0" FontWeight="Bold" FontFamily="/Assets/fonts/cerebrisans-bold.ttf#Cerebri Sans" />
 
         <GridView ItemsSource="{ x:Bind MovieList }"
                   Margin="24 68 12 0"
@@ -61,7 +63,9 @@
                                         <SolidColorBrush Color="Black" Opacity="0.7" />
                                     </Grid.Background>
 
-                                    <TextBlock Text="{ Binding GenresStringify }" FontFamily="Roboto" FontWeight="Bold" />
+                                    <TextBlock Text="{ Binding GenresStringify }"
+                                               FontWeight="Bold"
+                                               FontFamily="/Assets/fonts/cerebrisans-bold.ttf#Cerebri Sans" />
                                 </Grid>
 
                                 <Grid Canvas.Top="394" Width="285" Padding="8 4">
@@ -69,11 +73,16 @@
                                         <SolidColorBrush Color="Black" Opacity="0.7" />
                                     </Grid.Background>
 
-                                    <TextBlock Text="{ Binding Duration }" TextAlignment="Center" FontFamily="Roboto" FontWeight="Bold" />
+                                    <TextBlock Text="{ Binding Duration }"
+                                               TextAlignment="Center"
+                                               FontWeight="Bold"
+                                               FontFamily="/Assets/fonts/cerebrisans-bold.ttf#Cerebri Sans" />
 
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                         <Image Source="/Assets/IMDB_Logo_2016.svg" Height="14" Margin="0 0 4 0" />
-                                        <TextBlock Text="{ Binding ImdbRating }" FontFamily="Roboto" FontWeight="Bold" />
+                                        <TextBlock Text="{ Binding ImdbRating }"
+                                                   FontWeight="Bold"
+                                                   FontFamily="/Assets/fonts/cerebrisans-bold.ttf#Cerebri Sans" />
                                     </StackPanel>
                                 </Grid>
                             </Canvas>

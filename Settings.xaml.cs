@@ -47,11 +47,13 @@ namespace homarr {
                     Text = setting.description,
                     VerticalAlignment = VerticalAlignment.Center,
                     Margin = new Thickness(10),
+                    FontFamily = new FontFamily("/Assets/fonts/cerebrisans-regular.ttf#Cerebri Sans"),
                 };
 
                 var textBox = new TextBox {
                     Margin = new Thickness(10),
                     Width = 350,
+                    FontFamily = new FontFamily("/Assets/fonts/cerebrisans-regular.ttf#Cerebri Sans"),
                 };
 
                 if (localSettings.Values[setting.key] != null) {
