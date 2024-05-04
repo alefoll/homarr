@@ -10,7 +10,13 @@
         <Border x:Name="AppTitleBar" Margin="48 0 0 0" VerticalAlignment="Top" Height="40">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
                 <Image Source="/Assets/Logo.svg" Width="32" />
-                <TextBlock x:Name="AppTitle" Text="Homarr" Margin="12 10 0 0" FontFamily="/Assets/fonts/cerebrisans-regular.ttf#Cerebri Sans" />
+                <TextBlock x:Name="AppTitle"
+                           Text="Homarr"
+                           Margin="12 2 0 0"
+                           VerticalAlignment="Center"
+                           FontSize="16"
+                           FontWeight="Bold"
+                           FontFamily="/Assets/fonts/cerebrisans-bold.ttf#Cerebri Sans" />
             </StackPanel>
         </Border>
 

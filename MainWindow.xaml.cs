@@ -70,7 +70,9 @@ namespace homarr {
                 backdropConfiguration.IsInputActive = args.WindowActivationState != WindowActivationState.Deactivated;
             };
 
-            var backdropController = new DesktopAcrylicController();
+            var backdropController = new DesktopAcrylicController {
+                Kind = DesktopAcrylicKind.Thin,
+            };
 
             this.Closed += (sender, args) => {
                 backdropController.Dispose();

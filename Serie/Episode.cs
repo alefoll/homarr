@@ -17,11 +17,12 @@ namespace homarr.Serie {
         public string Duration { get; set; }
 
         private BitmapImage _thumbnail { get; set; }
+        public bool IsThumbnailNotAvailable { get; set; } = true;
         private bool _thumbnailRetreiveCalled { get; set; } = false;
         public BitmapImage Thumbnail {
             get {
                 if (_thumbnailRetreiveCalled == false) {
-                    RetreiveThumbnail();
+                    _ = RetreiveThumbnail();
                 }
 
                 return _thumbnail;
@@ -39,7 +40,7 @@ namespace homarr.Serie {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        private async void RetreiveThumbnail() {
+        private async Task RetreiveThumbnail() {
             _thumbnailRetreiveCalled = true;
 
             BitmapImage image = new BitmapImage();
@@ -50,6 +51,7 @@ namespace homarr.Serie {
 
             image.SetSource(windowsThumbnail);
 
+            IsThumbnailNotAvailable = false;
             Thumbnail = image;
         }
 

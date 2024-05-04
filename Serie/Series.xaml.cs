@@ -3,6 +3,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Windows.UI;
 
 namespace homarr.Serie {
@@ -16,14 +17,14 @@ namespace homarr.Serie {
 
             this.Sonarr = new Sonarr(Settings.GetSetting("SonarrUrl"), Settings.GetSetting("SonarrApiKey"));
 
-            getSeries();
+            _ = GetSeries();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e) {
             base.OnNavigatedTo(e);
         }
 
-        private async void getSeries() {
+        private async Task GetSeries() {
             foreach (var serie in await this.Sonarr.GetSeries()) {
                 this.SerieList.Add(serie);
             }

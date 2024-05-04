@@ -6,6 +6,7 @@
     xmlns:local="using:homarr.Serie"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:media="using:CommunityToolkit.WinUI.Media"
     mc:Ignorable="d">
 
     <Grid Background="{ ThemeResource AcrylicBackgroundFillColorBaseBrush }"
@@ -22,24 +23,24 @@
                 <DataTemplate>
                     <!--
                         1080p:
-                            grid width = 1783
+                            grid.width = 1783
 
                         2160p:
-                            grid width = ???
+                            grid.width = ???
 
                         formula:
                             nth element = 6
                             margin right = 12
-                            border width = Math.floor((grid width - (nth element * margin right)) / nth element)
-                            border heigth = Math.round(border width * 1.47)
+                            border.width = Math.floor((grid.width - (nth element * margin right)) / nth element)
+                            image.width = border.width
+                            image.height = Math.round(border.width * 1.47)
                     -->
                     <Border PointerEntered="OnBorderPointerEntered"
                             PointerExited="OnBorderPointerExited"
                             BorderThickness="1"
                             CornerRadius="7"
                             Margin="0 0 12 12"
-                            Width="285"
-                            Height="419">
+                            Width="285">
                         <Border.Style>
                             <Style TargetType="Border">
                                 <Setter Property="FocusVisualPrimaryBrush" Value="Transparent" />
@@ -53,11 +54,12 @@
 
                                 <Grid Canvas.Top="394" Width="285" Padding="8 4">
                                     <Grid.Background>
-                                        <SolidColorBrush Color="Black" Opacity="0.7" />
+                                        <media:BackdropBlurBrush Amount="10" />
                                     </Grid.Background>
 
                                     <TextBlock Text="{ Binding EpisodesCount }"
                                                TextAlignment="Center"
+                                               FontSize="16"
                                                FontWeight="Bold"
                                                FontFamily="/Assets/fonts/cerebrisans-bold.ttf#Cerebri Sans" />
                                 </Grid>

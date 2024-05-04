@@ -3,6 +3,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using Windows.UI;
 
 namespace homarr.Movie {
@@ -16,10 +17,10 @@ namespace homarr.Movie {
 
             this.Radarr = new Radarr(Settings.GetSetting("RadarrUrl"), Settings.GetSetting("RadarrApiKey"));
 
-            this.getMovies();
+            _ = this.GetMovies();
         }
 
-        private async void getMovies() {
+        private async Task GetMovies() {
             foreach (var movie in await this.Radarr.GetMovies()) {
                 this.MovieList.Add(movie);
             }

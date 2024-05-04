@@ -89,7 +89,7 @@ namespace homarr.Serie {
                             ImagePoster = this.Url + serie.images.Where(image => image.coverType.Equals("poster")).FirstOrDefault().url,
                             ImageFanart = this.Url + serie.images.Where(image => image.coverType.Equals("fanart")).FirstOrDefault().url,
                             Path = serie.path,
-                            IMdBLink = $"https://www.imdb.com/title/{serie.imdbId}/",
+                            IMdBLink = $"https://www.imdb.com/title/{ serie.imdbId }/",
                             Episodes = episodes,
                             Sonarr = this,
                         };
