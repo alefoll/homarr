@@ -14,14 +14,16 @@
     <ApplicationIcon>Assets\Logo.ico</ApplicationIcon>
     <IncludeSymbols>False</IncludeSymbols>
     <GenerateAppInstallerFile>False</GenerateAppInstallerFile>
-    <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
-    <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
+    <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
+    <AppxPackageSigningTimestampDigestAlgorithm>SHA512</AppxPackageSigningTimestampDigestAlgorithm>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundle>Never</AppxBundle>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <UseRidGraph>true</UseRidGraph>
+    <PackageCertificateThumbprint>F78F5D64B3A206DDABC73D222A8CD034AF5BB172</PackageCertificateThumbprint>
+    <AppxPackageDir>D:\dev\homarr\publish\</AppxPackageDir>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Movies.xaml" />
@@ -71,6 +73,9 @@
     <Page Update="Settings.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="publish\" />
   </ItemGroup>
 
   <!--

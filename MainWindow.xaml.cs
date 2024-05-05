@@ -42,6 +42,10 @@ namespace homarr {
 
             this.NavigationView.SelectedItem = this.NavigationView.MenuItems.First();
 
+            if (Settings.IsMissingSettings()) {
+                return;
+            }
+
             Type pageType = Type.GetType(GetPageName("Series"));
 
             this.NavigationViewFrame.Navigate(pageType);
@@ -97,14 +101,20 @@ namespace homarr {
                 return;
             }
 
-            this.NavigationView.SelectedItem = this.GetNavigationViewItem("Settings");
+            var navigationViewItemSettings = this.GetNavigationViewItem("Settings");
 
-            Type pageType = Type.GetType(GetPageName("Settings"));
+            this.NavigationView.SelectedItem = navigationViewItemSettings;
+
+            Type pageType = Type.GetType(GetPageName(navigationViewItemSettings.Tag.ToString()));
 
             this.NavigationViewFrame.Navigate(pageType, null, args.RecommendedNavigationTransitionInfo);
         }
 
         private void OnNavigationViewItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args) {
+            if (Settings.IsMissingSettings()) {
+                return;
+            }
+
             var clickedItem = (NavigationViewItem)args.InvokedItemContainer;
 
             if (clickedItem == null) {
@@ -142,12 +152,12 @@ namespace homarr {
             };
         }
 
-        private object GetNavigationViewItem(string tag) {
+        private NavigationViewItem GetNavigationViewItem(string tag) {
             return tag switch {
-                "Series" => this.NavigationView.MenuItems[0],
-                "SerieDetailedInfoPage" => this.NavigationView.MenuItems[0],
-                "Movies" => this.NavigationView.MenuItems[1],
-                "Settings" => this.NavigationView.FooterMenuItems.First(),
+                "Series" => this.NavigationView.MenuItems[0] as NavigationViewItem,
+                "SerieDetailedInfoPage" => this.NavigationView.MenuItems[0] as NavigationViewItem,
+                "Movies" => this.NavigationView.MenuItems[1] as NavigationViewItem,
+                "Settings" => this.NavigationView.FooterMenuItems.First() as NavigationViewItem,
                 _ => throw new Exception("Navigation Item not found"),
             };
         }
