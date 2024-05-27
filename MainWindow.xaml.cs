@@ -147,6 +147,7 @@ namespace homarr {
                 "Series" => "homarr.Serie.Series",
                 "SerieDetailedInfoPage" => "homarr.Serie.SerieDetailedInfoPage",
                 "Movies" => "homarr.Movie.Movies",
+                "History" => "homarr.History.History",
                 "Settings" => "homarr.Settings",
                 _ => throw new Exception("Page not found"),
             };
@@ -157,6 +158,7 @@ namespace homarr {
                 "Series" => this.NavigationView.MenuItems[0] as NavigationViewItem,
                 "SerieDetailedInfoPage" => this.NavigationView.MenuItems[0] as NavigationViewItem,
                 "Movies" => this.NavigationView.MenuItems[1] as NavigationViewItem,
+                "History" => this.NavigationView.MenuItems[2] as NavigationViewItem,
                 "Settings" => this.NavigationView.FooterMenuItems.First() as NavigationViewItem,
                 _ => throw new Exception("Navigation Item not found"),
             };

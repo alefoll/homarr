@@ -1,5 +1,7 @@
-﻿using System;
+using homarr.History;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
@@ -23,7 +25,8 @@ namespace homarr.Serie {
 
     public record class SerieAPIImage(
         string coverType = null,
-        string url = null
+        string url = null,
+        string remoteUrl = null
     );
 
     public record class SerieAPIStatistics(
@@ -32,6 +35,7 @@ namespace homarr.Serie {
     );
 
     public record class EpisodeAPI(
+        int id = 0,
         int episodeFileId = 0,
         string title = null,
         int seasonNumber = 0,
@@ -57,6 +61,18 @@ namespace homarr.Serie {
 
     public record class EpisodeFileAPIMediaInfo(
         string runTime = null
+    );
+
+    public record class HistoryRecordAPI(
+        DateTime date = default,
+        EpisodeAPI episode = null,
+        SerieAPI series = null,
+        string eventType = null,
+        HistoryRecordDataAPI data = null
+    );
+
+    public record class HistoryRecordDataAPI(
+        string importedPath = null
     );
 
     public sealed partial class Sonarr {
@@ -89,7 +105,7 @@ namespace homarr.Serie {
                             ImagePoster = this.Url + serie.images.Where(image => image.coverType.Equals("poster")).FirstOrDefault().url,
                             ImageFanart = this.Url + serie.images.Where(image => image.coverType.Equals("fanart")).FirstOrDefault().url,
                             Path = serie.path,
-                            IMdBLink = $"https://www.imdb.com/title/{ serie.imdbId }/",
+                            IMdBLink = $"https://www.imdb.com/title/{serie.imdbId}/",
                             Episodes = episodes,
                             Sonarr = this,
                         };
@@ -124,13 +140,91 @@ namespace homarr.Serie {
         }
 
         public async Task<bool> DeleteEpisode(int episodeId) {
-            var requestEpisodesUri = new Uri(this.Url + "/api/v3/episodefile/" + episodeId);
+            var requestUri = new Uri(this.Url + "/api/v3/episodefile/" + episodeId);
 
-            var responseEpisodes = await this.HttpClient.DeleteAsync(requestEpisodesUri);
+            var response = await this.HttpClient.DeleteAsync(requestUri);
 
-            responseEpisodes.EnsureSuccessStatusCode();
+            response.EnsureSuccessStatusCode();
 
             return true;
+        }
+
+        public async Task<List<HistoryGroup>> GetHistory(DateTime since) {
+            // NOTE: For eventType params, we only want the recently downloaded episodes aka "DownloadFolderImported"
+            // SEE: https://github.com/Sonarr/Sonarr/blob/627b2a4289ecdd5558d37940624289708e01e10a/src/NzbDrone.Core/History/EpisodeHistory.cs#L34L44
+            var requestUri = new Uri($"{this.Url}/api/v3/history/since?date={since.ToString("yyyy-MM-ddTHH:mm:ssZ")}&includeSeries=true&includeEpisode=true&eventType=3");
+
+            var response = await this.HttpClient.GetFromJsonAsync<List<HistoryRecordAPI>>(requestUri);
+
+            var historyGroups = new List<HistoryGroup>();
+
+            var cultureInfo = new CultureInfo("en-US");
+
+            var processedHistory = new List<int>();
+
+            foreach (var history in response.OrderByDescending(item => item.date)) {
+                var uniqueId = int.Parse(history.series.id.ToString() + history.episode.id.ToString());
+
+                if (processedHistory.Contains(uniqueId)) {
+                    continue;
+                }
+
+                processedHistory.Add(uniqueId);
+
+                var historyGroup = historyGroups.Find(element => element.Date.ToShortDateString() == history.date.ToShortDateString());
+
+                if (historyGroup == null) {
+                    historyGroup = new HistoryGroup {
+                        Date = history.date,
+                        DateStringify = history.date.ToString("dddd d MMMM", cultureInfo),
+                        Records = new List<HistoryRecord>(),
+                    };
+
+                    historyGroups.Add(historyGroup);
+                }
+
+                var historyRecordSerie = historyGroup.Records.Find(element => element.Id == history.series.id);
+
+                if (historyRecordSerie == null) {
+                    // HACK: API doesn't return local url image, only remote
+                    var imagePoster = $"{this.Url}/MediaCover/{history.series.id}/poster.jpg";
+
+                    historyRecordSerie = new HistoryRecord {
+                        Id = history.series.id,
+                        Title = history.series.title,
+                        Date = history.date,
+                        ImagePoster = imagePoster,
+                        IMdBLink = $"https://www.imdb.com/title/{history.series.imdbId}/",
+                        Children = new List<HistoryRecordChildren>(),
+                    };
+
+                    historyGroup.Records.Add(historyRecordSerie);
+                }
+
+                var historyRecordEpisode = historyRecordSerie.Children.Find(element => element.Id == history.episode.id);
+
+                if (historyRecordEpisode == null) {
+                    historyRecordEpisode = new HistoryRecordChildren {
+                        Id = history.episode.id,
+                        Title = history.episode.title,
+                        SeasonNumber = history.episode.seasonNumber,
+                        EpisodeNumber = history.episode.episodeNumber,
+                        Date = history.date,
+                    };
+
+                    historyRecordSerie.Children.Add(historyRecordEpisode);
+                } else if (historyRecordEpisode.Date.CompareTo(history.date) > 0) {
+                    historyRecordEpisode.Date = history.date;
+                }
+            }
+
+            foreach (var group in historyGroups) {
+                foreach (var record in group.Records) {
+                    record.Children.Sort(HistoryRecordChildren.Compare);
+                }
+            }
+
+            return historyGroups;
         }
     }
 }

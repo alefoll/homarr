@@ -1,0 +1,25 @@
+{
+  "excludes": [],
+  "plugins": [
+    "https://plugins.dprint.dev/roslyn-0.18.0.json@9586754a7e586ccda5dba4e694c0f225aabde63720c905dd85e02453b6f5e5de"
+  ],
+  "roslyn": {
+    "csharp.indentBraces": false,
+    "csharp.newLineForCatch": false,
+    "csharp.newLineForClausesInQuery": false,
+    "csharp.newLineForElse": false,
+    "csharp.newLineForFinally": false,
+    "csharp.newLineForMembersInAnonymousTypes": false,
+    "csharp.newLineForMembersInObjectInit": false,
+    "csharp.newLinesForBracesInAccessors": false,
+    "csharp.newLinesForBracesInAnonymousMethods": false,
+    "csharp.newLinesForBracesInAnonymousTypes": false,
+    "csharp.newLinesForBracesInControlBlocks": false,
+    "csharp.newLinesForBracesInLambdaExpressionBody": false,
+    "csharp.newLinesForBracesInMethods": false,
+    "csharp.newLinesForBracesInObjectCollectionArrayInitializers": false,
+    "csharp.newLinesForBracesInProperties": false,
+    "csharp.newLinesForBracesInTypes": false,
+    "visualBasic.indentWidth": 4
+  }
+}

@@ -1,4 +1,4 @@
-﻿using System.Runtime.InteropServices; // For DllImport
+using System.Runtime.InteropServices; // For DllImport
 
 namespace homarr {
     class WindowsSystemDispatcherQueueHelper {

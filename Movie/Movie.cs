@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -16,7 +16,7 @@ namespace homarr.Movie {
         public string GenresStringify {
             get { return String.Join(", ", this.Genres); }
         }
-        public double ImdbRating { get; set; }
+        public double? ImdbRating { get; set; }
         public Radarr Radarr { get; set; }
 
         public void Play() {

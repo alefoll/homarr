@@ -26,6 +26,7 @@
     <AppxPackageDir>D:\dev\homarr\publish\</AppxPackageDir>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="History.xaml" />
     <None Remove="Movies.xaml" />
     <None Remove="SerieDetailedInfoPage.xaml" />
     <None Remove="Series.xaml" />
@@ -42,9 +43,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.0.240109" />
     <PackageReference Include="CommunityToolkit.WinUI.Media" Version="8.0.240109" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240404000" />
-    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22621.3233" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240428000" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>
 
@@ -67,6 +69,10 @@
     </Page>
     <Page Update="Movies.xaml">
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="History.xaml">
+      <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

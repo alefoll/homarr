@@ -58,6 +58,15 @@
                         </StackPanel>
                     </NavigationViewItem.Content>
                 </NavigationViewItem>
+
+                <NavigationViewItem Tag="History" Padding="0 8">
+                    <NavigationViewItem.Content>
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="-12 0 -21 0">
+                            <FontIcon FontFamily="Segoe UI Emoji" Glyph="&#x1F553;" FontSize="32" />
+                            <TextBlock Text="History" TextAlignment="Center" FontFamily="/Assets/fonts/cerebrisans-regular.ttf#Cerebri Sans" />
+                        </StackPanel>
+                    </NavigationViewItem.Content>
+                </NavigationViewItem>
             </NavigationView.MenuItems>
 
             <NavigationView.FooterMenuItems>
