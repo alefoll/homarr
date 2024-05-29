@@ -24,6 +24,7 @@
     <UseRidGraph>true</UseRidGraph>
     <PackageCertificateThumbprint>F78F5D64B3A206DDABC73D222A8CD034AF5BB172</PackageCertificateThumbprint>
     <AppxPackageDir>D:\dev\homarr\publish\</AppxPackageDir>
+    <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="History.xaml" />
